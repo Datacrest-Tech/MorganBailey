@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import FlowLine from "../components/FlowLine";
 import { services, testimonials } from "../data/siteContent";
 import logoMark from "../assets/logo-transparent.png";
@@ -10,25 +11,22 @@ const metrics = [
 ];
 
 export default function Home() {
+  const [showAll, setShowAll] = useState(false);
+
   return (
     <div className="page-shell">
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden min-h-[calc(100vh-5.5rem)]">
         <div className="hero-grid pointer-events-none absolute inset-0" />
-        <div className="container-xl relative grid items-center gap-10 pt-16 pb-14 md:grid-cols-12 md:pt-24 md:pb-20">
+        <div className="container-xl relative grid h-full items-center gap-6 pt-20 pb-8 md:grid-cols-12 md:pt-28 md:pb-12">
           <div className="md:col-span-7">
-            <p className="eyebrow mb-5">
+            <p className="eyebrow mb-3">
               Outsourcing / Logistics / Project Management
             </p>
-            <h1 className="max-w-4xl text-4xl font-display font-bold leading-[1.03] tracking-tight text-ink md:text-6xl">
+            <h1 className="max-w-3xl text-4xl font-display font-bold leading-snug tracking-tight text-ink md:text-6xl">
               We are great at outsourcing, logistics support &amp;
               <span className="text-brand"> project management.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate">
-              Our great network of people and services makes us your sure
-              outsourcing partner. Project management from start to finish - we
-              are in sync with you.
-            </p>
-            <p className="mt-4 font-semibold text-ink">
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-slate">
               Looking for quality support service providers? Think Morgan
               Bailey.
             </p>
@@ -62,43 +60,15 @@ export default function Home() {
 
           <div className="relative md:col-span-5">
             <div
-              className="hero-float relative mx-auto aspect-[4/5] max-w-md rounded-md border border-white/70 bg-steel p-5 shadow-[0_34px_90px_-50px_rgba(16,21,28,0.85)] md:max-w-lg md:p-7"
+              className="hero-float animate-float relative mx-auto aspect-square max-w-[24rem] bg-transparent p-0 md:max-w-[30rem]"
               style={{ perspective: 1100 }}
             >
-              <div className="absolute inset-5 rounded-md border border-white/10" />
-              <div className="relative flex h-full flex-col items-center justify-between overflow-hidden rounded-md bg-[linear-gradient(135deg,#171d25,#0f141b)] p-6 text-white">
-                <div className="w-full text-center">
-                  <p className="font-mono text-xs uppercase tracking-[0.18em] text-brand">
-                    Your sure outsourcing partner
-                  </p>
-                </div>
-
-                <div className="relative flex flex-1 items-center justify-center">
-                  <div
-                    className="brand-glow absolute h-56 w-56 rounded-full md:h-64 md:w-64"
-                    aria-hidden="true"
-                  />
-                  <img
-                    src={logoMark}
-                    alt="Morgan Bailey Limited"
-                    className="relative w-72 max-w-[85%] drop-shadow-[0_28px_38px_rgba(0,0,0,0.5)] md:w-80"
-                  />
-                </div>
-
-                <div className="grid w-full grid-cols-2 gap-3 text-xs text-white/70">
-                  <div className="rounded-md border border-white/10 bg-white/5 p-3">
-                    Procurement
-                  </div>
-                  <div className="rounded-md border border-white/10 bg-white/5 p-3">
-                    Fleet support
-                  </div>
-                  <div className="rounded-md border border-white/10 bg-white/5 p-3">
-                    HR support
-                  </div>
-                  <div className="rounded-md border border-white/10 bg-white/5 p-3">
-                    Ground services
-                  </div>
-                </div>
+              <div className="relative flex h-full flex-col items-center justify-center overflow-visible p-0 text-ink">
+                <img
+                  src={logoMark}
+                  alt="Morgan Bailey Limited"
+                  className="relative h-72 w-72 max-w-[80%] object-contain drop-shadow-[0_38px_48px_rgba(0,0,0,0.35)] animate-sway md:h-[24rem] md:w-[24rem]"
+                />
               </div>
             </div>
           </div>
@@ -161,33 +131,90 @@ export default function Home() {
                 A one-stop shop for outsourced operations.
               </h2>
             </div>
-            <Link to="/services" className="text-link">
-              View all services <span aria-hidden="true">-&gt;</span>
-            </Link>
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={() => setShowAll((s) => !s)}
+                className="text-link"
+              >
+                {showAll ? "Hide services" : "All services"}{" "}
+                <span aria-hidden="true">-&gt;</span>
+              </button>
+              <Link to="/services" className="text-slate text-sm">
+                Open services page
+              </Link>
+            </div>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((s) => (
-              <Link
-                key={s.id}
-                to={`/services/${s.id}`}
-                className="focus-ring group premium-card p-7"
-              >
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-brand-50 font-mono text-xs font-semibold text-brand">
-                  {s.code}
-                </span>
-                <h3 className="mt-4 mb-2 text-lg font-display font-semibold transition-colors group-hover:text-brand">
-                  {s.name}
-                </h3>
-                <p className="text-sm leading-relaxed text-slate">
-                  {s.summary}
-                </p>
-                <span className="mt-5 inline-flex text-sm font-semibold text-ink/50 transition-colors group-hover:text-brand">
-                  Explore <span aria-hidden="true" className="ml-2">-&gt;</span>
-                </span>
-              </Link>
-            ))}
-          </div>
+          {showAll ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {services.map((s) => (
+                <Link
+                  key={s.id}
+                  to={`/services/${s.id}`}
+                  className="focus-ring group premium-card p-7"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="overflow-hidden rounded-full bg-brand-50 p-1 shadow-inner shadow-black/10">
+                      <img
+                        src={s.image || "/logo.png"}
+                        alt={s.name}
+                        className="h-16 w-16 rounded-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="mt-0 mb-3 text-xl md:text-2xl font-display font-semibold transition-colors group-hover:text-brand">
+                        {s.name}
+                      </h3>
+                      <p className="text-base leading-relaxed text-slate">
+                        {s.summary}
+                      </p>
+                      <span className="mt-5 inline-flex text-sm font-semibold text-ink/50 transition-colors group-hover:text-brand">
+                        Explore{" "}
+                        <span aria-hidden="true" className="ml-2">
+                          -&gt;
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {services.slice(0, 3).map((s) => (
+                <Link
+                  key={s.id}
+                  to={`/services/${s.id}`}
+                  className="focus-ring group premium-card p-7"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="overflow-hidden rounded-full bg-brand-50 p-1 shadow-inner shadow-black/10">
+                      <img
+                        src={s.image || "/logo.png"}
+                        alt={s.name}
+                        className="h-16 w-16 rounded-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="mt-0 mb-3 text-xl md:text-2xl font-display font-semibold transition-colors group-hover:text-brand">
+                        {s.name}
+                      </h3>
+                      <p className="text-base leading-relaxed text-slate">
+                        {s.summary}
+                      </p>
+                      <span className="mt-5 inline-flex text-sm font-semibold text-ink/50 transition-colors group-hover:text-brand">
+                        Explore{" "}
+                        <span aria-hidden="true" className="ml-2">
+                          -&gt;
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

@@ -45,6 +45,9 @@ export default function Careers() {
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate">
             {careers.intro}
           </p>
+          <div className="media-frame mt-8 h-48 w-full shadow-[0_20px_50px_-20px_rgba(16,21,28,0.35)] md:h-64">
+            <img src="/images/career.jpg" alt="Careers at Morgan Bailey" />
+          </div>
         </div>
       </section>
 
@@ -108,7 +111,10 @@ export default function Careers() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="surface-card space-y-4 p-8">
+            <form
+              onSubmit={handleSubmit}
+              className="surface-card space-y-4 p-8"
+            >
               <div className="grid gap-4 sm:grid-cols-2">
                 <input
                   required

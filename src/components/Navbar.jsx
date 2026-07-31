@@ -22,50 +22,49 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full border-b bg-white/95 transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-xl border-b border-line shadow-[0_14px_34px_-28px_rgba(16,21,28,0.55)]"
-          : "bg-white/75 backdrop-blur border-b border-transparent"
+          ? "border-line/80 shadow-[0_14px_34px_-28px_rgba(16,21,28,0.55)] backdrop-blur-xl"
+          : "border-line/20"
       }`}
     >
-      <nav className="container-xl flex items-center justify-between h-24">
+      <nav className="container-xl mx-auto flex items-center gap-6 h-24">
         <Link to="/" className="focus-ring" onClick={() => setOpen(false)}>
-          <Logo className="h-20 md:h-28" />
+          <Logo className="h-14 md:h-20" />
         </Link>
 
-        <div className="hidden md:flex items-center gap-1 rounded-md border border-line/70 bg-white/65 p-1 shadow-[0_14px_35px_-34px_rgba(16,21,28,0.8)]">
+        <div className="hidden md:flex flex-1 items-center justify-center gap-8">
           {links.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
               className={({ isActive }) =>
-                `rounded-md px-3.5 py-2 text-sm font-semibold tracking-wide transition-colors focus-ring ${
-                  isActive
-                    ? "bg-brand-50 text-brand"
-                    : "text-ink/70 hover:bg-paper hover:text-ink"
+                `rounded-full px-3.5 py-2 text-sm font-semibold tracking-wide transition-colors focus-ring ${
+                  isActive ? "text-brand" : "text-ink/80 hover:text-ink"
                 }`
               }
             >
               {l.label}
             </NavLink>
           ))}
-          <Link
-            to="/request-a-quote"
-            className="focus-ring ml-1 inline-flex items-center rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-brand"
-          >
-            Request a Quote
-          </Link>
         </div>
 
+        <Link
+          to="/contact"
+          className="focus-ring hidden md:inline-flex items-center justify-center rounded-full bg-ink px-6 py-2 text-sm font-semibold text-white transition-all hover:bg-brand"
+        >
+          Contact
+        </Link>
+
         <button
-          className="focus-ring -mr-2 rounded-md border border-line bg-white p-2 md:hidden"
+          className="focus-ring -mr-2 rounded-md border border-line bg-white/10 p-2 md:hidden text-ink transition-all"
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
         >
-          <span className="block w-6 h-0.5 bg-ink mb-1.5" />
-          <span className="block w-6 h-0.5 bg-ink mb-1.5" />
-          <span className="block w-4 h-0.5 bg-ink" />
+          <span className="block w-6 h-0.5 mb-1.5 bg-ink transition-colors" />
+          <span className="block w-6 h-0.5 mb-1.5 bg-ink transition-colors" />
+          <span className="block w-4 h-0.5 bg-ink transition-colors" />
         </button>
       </nav>
 

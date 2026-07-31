@@ -29,6 +29,7 @@ export const services = [
   {
     id: "project-management",
     code: "01",
+    icon: "🧭",
     name: "Project Management",
     image: "/images/services/project-management.jpg",
     summary:
@@ -51,7 +52,9 @@ export const services = [
   {
     id: "human-resource-management",
     code: "02",
+    icon: "👥",
     name: "Human Resource Management",
+    image: "/images/human resources.jpg",
     summary:
       "People administration, payroll, and workforce development handled end to end.",
     description:
@@ -68,6 +71,7 @@ export const services = [
   {
     id: "logistics-support",
     code: "03",
+    icon: "🚚",
     name: "Logistics Support Services",
     image: "/images/services/logistics-support.jpg",
     summary:
@@ -85,6 +89,7 @@ export const services = [
   {
     id: "procurement-management",
     code: "04",
+    icon: "🛒",
     name: "Procurement Management Services",
     image: "/images/services/procurement-management.jpg",
     summary:
@@ -104,6 +109,7 @@ export const services = [
   {
     id: "ground-support",
     code: "05",
+    icon: "🛫",
     name: "Ground Support Services",
     image: "/images/services/ground-support.jpg",
     summary:
@@ -121,6 +127,7 @@ export const services = [
   {
     id: "fleet-management",
     code: "06",
+    icon: "🚗",
     name: "Fleet Management Services",
     image: "/images/services/fleet-management.jpg",
     summary:
@@ -139,6 +146,7 @@ export const services = [
   {
     id: "storage-facilities",
     code: "07",
+    icon: "🏢",
     name: "Storage Facilities",
     image: "/images/services/storage-facilities.jpg",
     summary: "Secure storage and flexible delivery and pick-up solutions.",
@@ -153,6 +161,7 @@ export const services = [
   {
     id: "distribution-services",
     code: "08",
+    icon: "📦",
     name: "Distribution Services",
     image: "/images/services/distribution-services.jpg",
     summary:
@@ -168,6 +177,7 @@ export const services = [
   {
     id: "destination-services",
     code: "09",
+    icon: "🌍",
     name: "Destination Services",
     image: "/images/services/destination-services.jpg",
     summary:
