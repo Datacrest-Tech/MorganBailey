@@ -1,21 +1,34 @@
-import { transporter, mailFrom, mailTo, isEmail, escapeHtml, isRateLimited } from "./_lib/mailer.js";
+import {
+  transporter,
+  mailFrom,
+  mailTo,
+  isEmail,
+  escapeHtml,
+  isRateLimited,
+} from "./_lib/mailer.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false, error: "Method not allowed." });
   }
   if (isRateLimited(req)) {
-    return res.status(429).json({ ok: false, error: "Too many requests. Please try again later." });
+    return res
+      .status(429)
+      .json({ ok: false, error: "Too many requests. Please try again later." });
   }
 
   try {
     const { name, company, email, phone, service, details } = req.body || {};
 
     if (!name || !company || !email || !service || !details) {
-      return res.status(400).json({ ok: false, error: "Please complete all required fields." });
+      return res
+        .status(400)
+        .json({ ok: false, error: "Please complete all required fields." });
     }
     if (!isEmail(email)) {
-      return res.status(400).json({ ok: false, error: "Please provide a valid email address." });
+      return res
+        .status(400)
+        .json({ ok: false, error: "Please provide a valid email address." });
     }
 
     await transporter.sendMail({
@@ -38,7 +51,17 @@ export default async function handler(req, res) {
 
     res.status(200).json({ ok: true });
   } catch (err) {
-    console.error("Quote request error:", err);
-    res.status(500).json({ ok: false, error: "We couldn't send your request. Please try again shortly." });
+    console.error("Quote request error:", err.message || err);
+    console.error("SMTP Debug:", {
+      SMTP_HOST: process.env.SMTP_HOST ? "set" : "MISSING",
+      SMTP_USER: process.env.SMTP_USER ? "set" : "MISSING",
+      SMTP_PASS: process.env.SMTP_PASS ? "set" : "MISSING",
+    });
+    res
+      .status(500)
+      .json({
+        ok: false,
+        error: "We couldn't send your request. Please try again shortly.",
+      });
   }
 }

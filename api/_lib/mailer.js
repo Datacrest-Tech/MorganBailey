@@ -5,13 +5,32 @@
 // dotenv package or manual wiring is needed here.
 import nodemailer from "nodemailer";
 
-const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE, MAIL_TO, MAIL_FROM } =
-  process.env;
+const {
+  SMTP_HOST,
+  SMTP_PORT,
+  SMTP_USER,
+  SMTP_PASS,
+  SMTP_SECURE,
+  MAIL_TO,
+  MAIL_FROM,
+} = process.env;
+
+console.log("[MAILER INIT] Environment loaded", {
+  SMTP_HOST,
+  SMTP_PORT,
+  SMTP_SECURE,
+  SMTP_USER,
+  MAIL_TO,
+  MAIL_FROM,
+});
 
 if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !MAIL_TO) {
-  console.warn(
-    "[warn] SMTP is not fully configured. Set SMTP_HOST, SMTP_USER, SMTP_PASS and MAIL_TO in your Vercel Environment Variables (or .env for local `vercel dev`)."
-  );
+  console.error("[ERROR] SMTP is NOT configured. Missing:", {
+    SMTP_HOST: !!SMTP_HOST,
+    SMTP_USER: !!SMTP_USER,
+    SMTP_PASS: !!SMTP_PASS,
+    MAIL_TO: !!MAIL_TO,
+  });
 }
 
 // Reused across invocations on a warm serverless instance instead of

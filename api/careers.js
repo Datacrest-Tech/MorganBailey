@@ -1,5 +1,12 @@
 import multer from "multer";
-import { transporter, mailFrom, mailTo, isEmail, escapeHtml, isRateLimited } from "./_lib/mailer.js";
+import {
+  transporter,
+  mailFrom,
+  mailTo,
+  isEmail,
+  escapeHtml,
+  isRateLimited,
+} from "./_lib/mailer.js";
 
 // This route handles a file upload (the CV), so it needs the raw
 // multipart body rather than Vercel's automatic JSON/urlencoded parsing.
@@ -26,7 +33,9 @@ const upload = multer({
 // directly, so we just call it and wrap it in a promise.
 function runMiddleware(req, res, fn) {
   return new Promise((resolve, reject) => {
-    fn(req, res, (result) => (result instanceof Error ? reject(result) : resolve(result)));
+    fn(req, res, (result) =>
+      result instanceof Error ? reject(result) : resolve(result),
+    );
   });
 }
 
@@ -35,23 +44,34 @@ export default async function handler(req, res) {
     return res.status(405).json({ ok: false, error: "Method not allowed." });
   }
   if (isRateLimited(req)) {
-    return res.status(429).json({ ok: false, error: "Too many requests. Please try again later." });
+    return res
+      .status(429)
+      .json({ ok: false, error: "Too many requests. Please try again later." });
   }
 
   try {
     await runMiddleware(req, res, upload.single("cv"));
   } catch (uploadErr) {
-    return res.status(400).json({ ok: false, error: uploadErr.message || "Could not process the uploaded file." });
+    return res
+      .status(400)
+      .json({
+        ok: false,
+        error: uploadErr.message || "Could not process the uploaded file.",
+      });
   }
 
   try {
     const { name, email, phone, role, message } = req.body || {};
 
     if (!name || !email) {
-      return res.status(400).json({ ok: false, error: "Name and email are required." });
+      return res
+        .status(400)
+        .json({ ok: false, error: "Name and email are required." });
     }
     if (!isEmail(email)) {
-      return res.status(400).json({ ok: false, error: "Please provide a valid email address." });
+      return res
+        .status(400)
+        .json({ ok: false, error: "Please provide a valid email address." });
     }
 
     const attachments = req.file
@@ -79,7 +99,17 @@ export default async function handler(req, res) {
 
     res.status(200).json({ ok: true });
   } catch (err) {
-    console.error("Careers form error:", err);
-    res.status(500).json({ ok: false, error: "We couldn't send your application. Please try again shortly." });
+    console.error("Careers form error:", err.message || err);
+    console.error("SMTP Debug:", {
+      SMTP_HOST: process.env.SMTP_HOST ? "set" : "MISSING",
+      SMTP_USER: process.env.SMTP_USER ? "set" : "MISSING",
+      SMTP_PASS: process.env.SMTP_PASS ? "set" : "MISSING",
+    });
+    res
+      .status(500)
+      .json({
+        ok: false,
+        error: "We couldn't send your application. Please try again shortly.",
+      });
   }
 }

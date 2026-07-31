@@ -1,21 +1,38 @@
-import { transporter, mailFrom, mailTo, isEmail, escapeHtml, isRateLimited } from "./_lib/mailer.js";
+import {
+  transporter,
+  mailFrom,
+  mailTo,
+  isEmail,
+  escapeHtml,
+  isRateLimited,
+} from "./_lib/mailer.js";
 
 export default async function handler(req, res) {
+  console.log("[CONTACT] Request received:", {
+    method: req.method,
+    body: req.body,
+  });
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false, error: "Method not allowed." });
   }
   if (isRateLimited(req)) {
-    return res.status(429).json({ ok: false, error: "Too many requests. Please try again later." });
+    return res
+      .status(429)
+      .json({ ok: false, error: "Too many requests. Please try again later." });
   }
 
   try {
     const { name, email, phone, subject, message } = req.body || {};
 
     if (!name || !email || !message) {
-      return res.status(400).json({ ok: false, error: "Name, email and message are required." });
+      return res
+        .status(400)
+        .json({ ok: false, error: "Name, email and message are required." });
     }
     if (!isEmail(email)) {
-      return res.status(400).json({ ok: false, error: "Please provide a valid email address." });
+      return res
+        .status(400)
+        .json({ ok: false, error: "Please provide a valid email address." });
     }
 
     await transporter.sendMail({
@@ -37,7 +54,15 @@ export default async function handler(req, res) {
 
     res.status(200).json({ ok: true });
   } catch (err) {
-    console.error("Contact form error:", err);
-    res.status(500).json({ ok: false, error: "We couldn't send your message. Please try again shortly." });
+    console.error("Contact form error:", err.message || err);
+    console.error("SMTP Debug:", {
+      SMTP_HOST: process.env.SMTP_HOST ? "set" : "MISSING",
+      SMTP_USER: process.env.SMTP_USER ? "set" : "MISSING",
+      SMTP_PASS: process.env.SMTP_PASS ? "set" : "MISSING",
+    });
+    res.status(500).json({
+      ok: false,
+      error: "We couldn't send your message. Please try again shortly.",
+    });
   }
 }
