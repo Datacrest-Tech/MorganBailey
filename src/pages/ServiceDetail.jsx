@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { services } from "../data/siteContent";
+import { trackButtonClick } from "../lib/analytics";
 
 export default function ServiceDetail() {
   const { id } = useParams();
@@ -61,7 +62,11 @@ export default function ServiceDetail() {
               {next.name} -&gt;
             </Link>
           </div>
-          <Link to="/request-a-quote" className="btn-primary">
+          <Link
+            to="/request-a-quote"
+            onClick={() => trackButtonClick("Schedule Consultation")}
+            className="btn-primary"
+          >
             Request this service
           </Link>
         </div>

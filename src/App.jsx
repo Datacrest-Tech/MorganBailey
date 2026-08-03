@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
 import ScrollToTop from "./components/ScrollToTop";
+import AnalyticsRouteTracker from "./components/AnalyticsRouteTracker";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <ScrollToTop />
+      <AnalyticsRouteTracker />
       <Navbar />
       <main className="flex-1">
         <Routes>

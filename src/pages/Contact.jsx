@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { company } from "../data/siteContent";
 import { submitForm } from "../lib/api";
+import { trackEvent, trackFormSubmission } from "../lib/analytics";
 
 const initialForm = { name: "", email: "", phone: "", subject: "", message: "" };
+
+function phoneHref(phone) {
+  return `tel:${phone.replace(/[^\d+]/g, "")}`;
+}
 
 export default function Contact() {
   const [form, setForm] = useState(initialForm);
@@ -21,6 +26,7 @@ export default function Contact() {
     setError("");
     try {
       await submitForm("/api/contact", form);
+      trackFormSubmission("Contact Form");
       setStatus("sent");
       setForm(initialForm);
     } catch (err) {
@@ -46,14 +52,22 @@ export default function Contact() {
           <InfoBlock title="Address">{company.address}</InfoBlock>
           <InfoBlock title="Phone">
             {company.phones.map((p) => (
-              <span key={p} className="block">
+              <a
+                key={p}
+                href={phoneHref(p)}
+                onClick={() => trackEvent("Contact", "call_us_click", p)}
+                className="focus-ring block font-semibold text-brand"
+              >
                 {p}
-              </span>
+              </a>
             ))}
           </InfoBlock>
           <InfoBlock title="Email">
             <a
               href={`mailto:${company.email}`}
+              onClick={() =>
+                trackEvent("Contact", "email_link_click", "Contact Page Email")
+              }
               className="focus-ring font-semibold text-brand"
             >
               {company.email}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { careers } from "../data/siteContent";
 import { submitFormData } from "../lib/api";
+import { trackEvent } from "../lib/analytics";
 
 const initialForm = { name: "", email: "", phone: "", role: "", message: "" };
 
@@ -86,6 +87,9 @@ export default function Careers() {
             Email:{" "}
             <a
               href={`mailto:${careers.applyEmail}`}
+              onClick={() =>
+                trackEvent("Contact", "email_link_click", "Careers Email")
+              }
               className="focus-ring font-semibold text-brand"
             >
               {careers.applyEmail}

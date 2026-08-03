@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { company, services } from "../data/siteContent";
 import Logo from "./Logo";
+import { trackButtonClick, trackEvent } from "../lib/analytics";
+
+function phoneHref(phone) {
+  return `tel:${phone.replace(/[^\d+]/g, "")}`;
+}
 
 export default function Footer() {
   return (
@@ -62,6 +67,7 @@ export default function Footer() {
             <li>
               <Link
                 to="/request-a-quote"
+                onClick={() => trackButtonClick("Schedule Consultation")}
                 className="focus-ring transition-colors hover:text-brand"
               >
                 Request a Quote
@@ -70,6 +76,7 @@ export default function Footer() {
             <li>
               <Link
                 to="/contact"
+                onClick={() => trackButtonClick("Contact Us")}
                 className="focus-ring transition-colors hover:text-brand"
               >
                 Contact Us
@@ -83,11 +90,22 @@ export default function Footer() {
           <ul className="space-y-2.5 text-sm text-white/70">
             <li>{company.address}</li>
             {company.phones.map((p) => (
-              <li key={p}>{p}</li>
+              <li key={p}>
+                <a
+                  href={phoneHref(p)}
+                  onClick={() => trackEvent("Contact", "call_us_click", p)}
+                  className="focus-ring transition-colors hover:text-brand"
+                >
+                  {p}
+                </a>
+              </li>
             ))}
             <li>
               <a
                 href={`mailto:${company.email}`}
+                onClick={() =>
+                  trackEvent("Contact", "email_link_click", "Footer Email")
+                }
                 className="focus-ring transition-colors hover:text-brand"
               >
                 {company.email}

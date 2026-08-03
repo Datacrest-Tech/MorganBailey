@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import FlowLine from "../components/FlowLine";
+import HeroSlideshow from "../components/HeroSlideshow";
 import { services, testimonials } from "../data/siteContent";
-import logoMark from "../assets/logo-transparent.png";
+import { trackButtonClick } from "../lib/analytics";
 
-const metrics = [
-  { value: "09", label: "Core service lines" },
-  { value: "ISO", label: "Quality-led operations" },
-  { value: "360", label: "End-to-end support" },
+const heroSlides = [
+  "/images/services/fleet-management.jpg",
+  "/images/services/ground-support.jpg",
+  "/images/services/storage-facilities.jpg",
+  "/images/services/distribution-services.jpg",
 ];
 
 export default function Home() {
@@ -15,66 +16,41 @@ export default function Home() {
 
   return (
     <div className="page-shell">
-      <section className="relative overflow-hidden min-h-[calc(100vh-5.5rem)]">
-        <div className="hero-grid pointer-events-none absolute inset-0" />
-        <div className="container-xl relative grid h-full items-center gap-6 pt-20 pb-8 md:grid-cols-12 md:pt-28 md:pb-12">
-          <div className="md:col-span-7">
-            <p className="eyebrow mb-3">
-              Outsourcing / Logistics / Project Management
-            </p>
-            <h1 className="max-w-3xl text-4xl font-display font-bold leading-snug tracking-tight text-ink md:text-6xl">
-              We are great at outsourcing, logistics support &amp;
-              <span className="text-brand"> project management.</span>
-            </h1>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-slate">
-              Looking for quality support service providers? Think Morgan
-              Bailey.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link to="/contact" className="btn-primary">
-                Contact Us Today <span aria-hidden="true">-&gt;</span>
-              </Link>
-              <Link to="/services" className="btn-secondary">
-                Check Our Services
-              </Link>
-              <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white/70 py-2 pl-2 pr-4 text-xs font-semibold text-ink/70">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-50 text-[10px] font-bold text-brand">
-                  ✓
-                </span>
-                ISO 9001:2000 Certified
-              </span>
-            </div>
-            <div className="mt-10 grid max-w-xl grid-cols-3 gap-3">
-              {metrics.map((item) => (
-                <div key={item.label} className="border-l border-line pl-4">
-                  <p className="font-display text-2xl font-bold text-ink">
-                    {item.value}
-                  </p>
-                  <p className="mt-1 text-xs leading-snug text-slate">
-                    {item.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative md:col-span-5">
-            <div
-              className="hero-float animate-float relative mx-auto aspect-square max-w-[24rem] bg-transparent p-0 md:max-w-[30rem]"
-              style={{ perspective: 1100 }}
+      <HeroSlideshow images={heroSlides} intervalMs={6000}>
+        <div className="max-w-3xl">
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.24em] text-brand">
+            Outsourcing / Logistics / Project Management
+          </p>
+          <h1 className="max-w-3xl text-4xl font-display font-bold leading-snug tracking-tight text-white md:text-6xl">
+            We are great at outsourcing, logistics support &amp;
+            <span className="text-brand"> project management.</span>
+          </h1>
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
+            Looking for quality support service providers? Think Morgan Bailey.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <Link
+              to="/contact"
+              onClick={() => trackButtonClick("Contact Us")}
+              className="btn-brand"
             >
-              <div className="relative flex h-full flex-col items-center justify-center overflow-visible p-0 text-ink">
-                <img
-                  src={logoMark}
-                  alt="Morgan Bailey Limited"
-                  className="relative h-72 w-72 max-w-[80%] object-contain drop-shadow-[0_38px_48px_rgba(0,0,0,0.35)] animate-sway md:h-[24rem] md:w-[24rem]"
-                />
-              </div>
-            </div>
+              Contact Us Today <span aria-hidden="true">-&gt;</span>
+            </Link>
+            <Link
+              to="/services"
+              className="focus-ring inline-flex items-center justify-center gap-2 rounded-md border border-white/25 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_16px_35px_-24px_rgba(0,0,0,0.9)] backdrop-blur transition-all hover:-translate-y-0.5 hover:border-brand/70 hover:bg-white/15"
+            >
+              Check Our Services
+            </Link>
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 py-2 pl-2 pr-4 text-xs font-semibold text-white/80 backdrop-blur">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-[0.65rem] font-bold text-white">
+                ISO
+              </span>
+              ISO 9001:2000 Certified
+            </span>
           </div>
         </div>
-        <FlowLine />
-      </section>
+      </HeroSlideshow>
 
       <section className="container-xl section-pad">
         <div className="grid gap-10 md:grid-cols-12">
@@ -290,10 +266,18 @@ export default function Home() {
             Think Morgan Bailey.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link to="/request-a-quote" className="btn-brand">
+            <Link
+              to="/request-a-quote"
+              onClick={() => trackButtonClick("Schedule Consultation")}
+              className="btn-brand"
+            >
               Request a Quote <span aria-hidden="true">-&gt;</span>
             </Link>
-            <Link to="/contact" className="btn-secondary">
+            <Link
+              to="/contact"
+              onClick={() => trackButtonClick("Contact Us")}
+              className="btn-secondary"
+            >
               Talk to Us
             </Link>
           </div>

@@ -61,6 +61,108 @@ h4 {
   mask-image: none;
 }
 
+.hero-slideshow {
+  background: #10151c;
+}
+
+.hero-slideshow__image {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1);
+  filter: saturate(0.72) contrast(1.05) brightness(0.92);
+  transition: opacity 1.2s ease-in-out;
+  will-change: opacity, transform;
+}
+
+.hero-slideshow__image--active {
+  opacity: 1;
+  animation: hero-ken-burns var(--hero-slide-duration, 6000ms) ease-in-out
+    forwards;
+}
+
+.hero-slideshow__scrim {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(16, 21, 28, 0.98) 0%,
+      rgba(16, 21, 28, 0.94) 38%,
+      rgba(16, 21, 28, 0.62) 55%,
+      rgba(16, 21, 28, 0.2) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(16, 21, 28, 0.72) 0%,
+      rgba(16, 21, 28, 0.08) 30%,
+      rgba(16, 21, 28, 0.08) 68%,
+      rgba(16, 21, 28, 0.78) 100%
+    );
+  pointer-events: none;
+}
+
+.hero-slideshow__scrim::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 22, 48, 0.34);
+  mix-blend-mode: multiply;
+}
+
+.hero-slideshow__dot {
+  height: 2px;
+  width: 3.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.34);
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.hero-slideshow__dot--active {
+  width: 5rem;
+  background: #ff6a00;
+}
+
+@keyframes hero-ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-slideshow__scrim {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(16, 21, 28, 0.95) 0%,
+        rgba(16, 21, 28, 0.82) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(16, 21, 28, 0.78) 0%,
+        rgba(16, 21, 28, 0.12) 35%,
+        rgba(16, 21, 28, 0.82) 100%
+      );
+  }
+
+  .hero-slideshow__scrim::after {
+    background: rgba(5, 22, 48, 0.36);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slideshow__image--active {
+    animation: none !important;
+  }
+}
+
 .surface-card {
   @apply rounded-md border border-white/70 bg-white/85 shadow-[0_24px_70px_-48px_rgba(16,21,28,0.55)] backdrop-blur;
 }

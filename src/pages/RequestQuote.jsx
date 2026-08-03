@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { services } from "../data/siteContent";
 import { submitForm } from "../lib/api";
+import { trackEvent, trackFormSubmission } from "../lib/analytics";
 
 const initialForm = {
   name: "",
@@ -26,6 +27,12 @@ export default function RequestQuote() {
     setError("");
     try {
       await submitForm("/api/quote", form);
+      trackFormSubmission("Service Enquiry");
+      trackEvent(
+        "Business",
+        "service_enquiry_submission",
+        form.service || "Unspecified service"
+      );
       setStatus("sent");
       setForm(initialForm);
     } catch (err) {
