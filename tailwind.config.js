@@ -40,8 +40,17 @@ export default {
         },
         float: {
           "0%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-16px)" },
+          "50%": { transform: "translateY(-6px)" },
           "100%": { transform: "translateY(0px)" },
+        },
+        breathe: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.015)" },
+        },
+        "logo-zoom": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.12)" },
+          "100%": { transform: "scale(1)" },
         },
       },
       animation: {
@@ -49,6 +58,8 @@ export default {
         rise: "rise 0.7s cubic-bezier(.2,.8,.2,1) forwards",
         "rotate-y": "rotate-y 8s linear infinite",
         float: "float 6s ease-in-out infinite",
+        breathe: "breathe 9s ease-in-out infinite",
+        "logo-zoom": "logo-zoom 3s ease-in-out infinite",
       },
     },
   },

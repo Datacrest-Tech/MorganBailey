@@ -1,97 +1,23 @@
-import { useEffect, useState } from "react";
-
-export default function HeroSlideshow({
-  images,
-  intervalMs = 6000,
-  children,
-}) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useEffect(() => {
-    images.forEach((src) => {
-      const image = new Image();
-      image.src = src;
-    });
-  }, [images]);
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    function syncMotionPreference() {
-      setReduceMotion(media.matches);
-    }
-
-    syncMotionPreference();
-    media.addEventListener("change", syncMotionPreference);
-
-    return () => media.removeEventListener("change", syncMotionPreference);
-  }, []);
-
-  useEffect(() => {
-    if (reduceMotion || images.length <= 1) return undefined;
-
-    const timer = window.setInterval(() => {
-      setActiveIndex((index) => (index + 1) % images.length);
-    }, intervalMs);
-
-    return () => window.clearInterval(timer);
-  }, [images.length, intervalMs, reduceMotion]);
-
-  const visibleImages = reduceMotion ? images.slice(0, 1) : images;
-  const currentIndex = reduceMotion ? 0 : activeIndex;
-
+export default function HeroCorporate({ children, image }) {
   return (
-    <section
-      className="hero-slideshow relative isolate overflow-hidden text-white"
-      style={{ "--hero-slide-duration": `${intervalMs}ms` }}
-    >
-      <div className="absolute inset-0 -z-20">
-        {visibleImages.map((src, index) => (
-          <img
-            key={src}
-            src={src}
-            alt=""
-            aria-hidden="true"
-            className={`hero-slideshow__image ${
-              index === currentIndex ? "hero-slideshow__image--active" : ""
-            }`}
-          />
-        ))}
-      </div>
-
-      <div className="hero-slideshow__scrim absolute inset-0 -z-10" />
-
-      <div className="container-xl relative flex min-h-[38rem] items-center pt-32 pb-24 md:min-h-[44rem] lg:min-h-[88vh]">
-        {children}
-      </div>
-
-      <div className="container-xl pointer-events-none absolute inset-x-0 bottom-8 z-10 flex items-end justify-between gap-6 md:bottom-12">
-        {!reduceMotion && images.length > 1 ? (
-          <div
-            className="pointer-events-auto flex items-center gap-2"
-            aria-label="Hero slideshow controls"
-          >
-            {images.map((src, index) => (
-              <button
-                key={src}
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                className={`hero-slideshow__dot ${
-                  index === activeIndex ? "hero-slideshow__dot--active" : ""
-                }`}
-                aria-label={`Show slide ${index + 1}`}
-                aria-current={index === activeIndex ? "true" : undefined}
-              />
-            ))}
+    <section className="relative bg-white text-ink pt-24 pb-16 md:pt-28 md:pb-20">
+      <div className="container-xl mx-auto">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[45%_55%] items-start min-h-[calc(100vh-6rem)]">
+          <div className="space-y-8">
+            <div className="space-y-6 animate-rise">{children}</div>
           </div>
-        ) : (
-          <span aria-hidden="true" />
-        )}
 
-        <div className="flex items-center gap-4 text-[0.65rem] font-semibold tracking-[0.42em] text-white/45">
-          <span>SCROLL</span>
-          <span className="h-10 w-px bg-white/35" aria-hidden="true" />
+          <div className="flex items-start justify-center md:-mt-10 lg:-mt-16">
+            <div className="motion-safe:animate-float w-full max-w-[980px] overflow-hidden rounded-[2rem] bg-white ring-1 ring-slate-100 shadow-[0_32px_80px_-40px_rgba(16,21,28,0.16)]">
+              {image && (
+                <img
+                  src={image}
+                  alt="Morgan Bailey Freight Services"
+                  className="motion-safe:animate-breathe origin-center h-[380px] w-full object-contain md:h-[480px] lg:h-[560px]"
+                />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>

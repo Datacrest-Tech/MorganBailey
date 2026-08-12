@@ -1,56 +1,56 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import HeroSlideshow from "../components/HeroSlideshow";
+import HeroCorporate from "../components/HeroSlideshow";
+import heroLogistic from "../assets/hero-logistic.png";
 import { services, testimonials } from "../data/siteContent";
 import { trackButtonClick } from "../lib/analytics";
-
-const heroSlides = [
-  "/images/services/fleet-management.jpg",
-  "/images/services/ground-support.jpg",
-  "/images/services/storage-facilities.jpg",
-  "/images/services/distribution-services.jpg",
-];
 
 export default function Home() {
   const [showAll, setShowAll] = useState(false);
 
   return (
     <div className="page-shell">
-      <HeroSlideshow images={heroSlides} intervalMs={6000}>
-        <div className="max-w-3xl">
-          <p className="mb-4 font-mono text-xs uppercase tracking-[0.24em] text-brand">
-            Outsourcing / Logistics / Project Management
-          </p>
-          <h1 className="max-w-3xl text-4xl font-display font-bold leading-snug tracking-tight text-white md:text-6xl">
-            We are great at outsourcing, logistics support &amp;
-            <span className="text-brand"> project management.</span>
-          </h1>
-          <p className="mt-6 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
-            Looking for quality support service providers? Think Morgan Bailey.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link
-              to="/contact"
-              onClick={() => trackButtonClick("Contact Us")}
-              className="btn-brand"
-            >
-              Contact Us Today <span aria-hidden="true">-&gt;</span>
-            </Link>
-            <Link
-              to="/services"
-              className="focus-ring inline-flex items-center justify-center gap-2 rounded-md border border-white/25 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_16px_35px_-24px_rgba(0,0,0,0.9)] backdrop-blur transition-all hover:-translate-y-0.5 hover:border-brand/70 hover:bg-white/15"
-            >
-              Check Our Services
-            </Link>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 py-2 pl-2 pr-4 text-xs font-semibold text-white/80 backdrop-blur">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-[0.65rem] font-bold text-white">
-                ISO
-              </span>
-              ISO 9001:2000 Certified
-            </span>
+      <HeroCorporate image={heroLogistic}>
+        {/* Top Label */}
+        <p className="text-brand uppercase font-mono text-sm font-semibold tracking-[0.35em]">
+          OUTSOURCING / LOGISTICS / PROJECT MANAGEMENT
+        </p>
+
+        {/* Headline */}
+        <h1 className="text-[clamp(36px,4vw,52px)] font-display font-extrabold leading-[1.02] tracking-[-0.03em] text-ink max-w-[560px]">
+          We are great at outsourcing, logistics support &{" "}
+          <span className="text-brand">project management.</span>
+        </h1>
+
+        {/* Description */}
+        <p className="text-base md:text-lg text-slate max-w-[560px] leading-relaxed">
+          Looking for quality support service providers?
+          <br />
+          Think Morgan Bailey.
+        </p>
+
+        {/* CTA + ISO Row */}
+        <div className="flex flex-col gap-4 pt-4 sm:flex-row sm:items-center">
+          <div className="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-3 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
+              ISO
+            </div>
+            <div>
+              <div className="font-semibold text-sm text-ink">
+                ISO 9001:2000
+              </div>
+              <div className="text-xs text-slate">Certified</div>
+            </div>
           </div>
+
+          <Link
+            to="/services"
+            className="focus-ring inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-8 py-4 text-white font-semibold text-base transition-all hover:bg-brand-dark"
+          >
+            Check Our Services
+          </Link>
         </div>
-      </HeroSlideshow>
+      </HeroCorporate>
 
       <section className="container-xl section-pad">
         <div className="grid gap-10 md:grid-cols-12">
