@@ -15,7 +15,7 @@ export default function HeroCorporate({ children, image }) {
                 <img
                   src={image}
                   alt="Morgan Bailey Freight Services"
-                  className="motion-safe:animate-breathe origin-center h-[380px] w-full object-contain md:h-[480px] lg:h-[560px]"
+                  className="motion-safe:animate-breathe origin-center h-64 sm:h-[380px] w-full object-contain md:h-[480px] lg:h-[560px]"
                 />
               )}
             </div>

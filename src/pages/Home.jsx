@@ -27,8 +27,8 @@ export default function Home() {
           Looking for quality support service providers?
           <br />
           Think Morgan Bailey.
-        </p>     
-                      
+        </p>
+
         {/* CTA + ISO Row */}
         <div className="flex flex-col gap-4 pt-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-4">
@@ -46,10 +46,10 @@ export default function Home() {
             </div>
 
             {/* CTA group: primary then secondary */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
               <Link
                 to="/services"
-                className="inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm focus-ring hover:bg-brand-dark"
+                className="inline-flex justify-center items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm focus-ring hover:bg-brand-dark w-full sm:w-auto"
               >
                 <span>Check Our Services</span>
                 <span aria-hidden className="ml-1">
@@ -62,7 +62,7 @@ export default function Home() {
                 onClick={() =>
                   trackButtonClick && trackButtonClick("Contact Us Today")
                 }
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink hover:bg-slate-50"
+                className="inline-flex justify-center items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink hover:bg-slate-50 w-full sm:w-auto"
               >
                 <span>Contact Us Today</span>
                 <span aria-hidden className="ml-1">
