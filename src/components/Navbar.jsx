@@ -52,7 +52,7 @@ export default function Navbar() {
           onClick={() => trackButtonClick("Contact")}
           className="focus-ring hidden md:inline-flex items-center gap-2 bg-brand text-white px-7 py-3 rounded-full font-semibold text-sm transition-all hover:bg-brand-dark hover:shadow-xl hover:-translate-y-0.5"
         >
-          Contact
+          Request a Quote
         </Link>
 
         {/* Mobile Menu Button */}

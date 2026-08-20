@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from "react";
+
 export default function HeroCorporate({ children, image }) {
   return (
     <section className="relative bg-white text-ink pt-24 pb-16 md:pt-28 md:pb-20">

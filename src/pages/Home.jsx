@@ -27,28 +27,50 @@ export default function Home() {
           Looking for quality support service providers?
           <br />
           Think Morgan Bailey.
-        </p>
-
+        </p>     
+                      
         {/* CTA + ISO Row */}
         <div className="flex flex-col gap-4 pt-4 sm:flex-row sm:items-center">
-          <div className="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-3 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
-              ISO
-            </div>
-            <div>
-              <div className="font-semibold text-sm text-ink">
-                ISO 9001:2000
+          <div className="flex items-center gap-4">
+            {/* Compact ISO trust badge (non-CTA) */}
+            <div className="inline-flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white">
+                ISO
               </div>
-              <div className="text-xs text-slate">Certified</div>
+              <div className="leading-tight">
+                <div className="font-semibold text-sm text-ink">
+                  ISO 9001:2000
+                </div>
+                <div className="text-xs text-slate">Certified</div>
+              </div>
+            </div>
+
+            {/* CTA group: primary then secondary */}
+            <div className="flex items-center gap-3">
+              <Link
+                to="/services"
+                className="inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm focus-ring hover:bg-brand-dark"
+              >
+                <span>Check Our Services</span>
+                <span aria-hidden className="ml-1">
+                  →
+                </span>
+              </Link>
+
+              <Link
+                to="/contact"
+                onClick={() =>
+                  trackButtonClick && trackButtonClick("Contact Us Today")
+                }
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink hover:bg-slate-50"
+              >
+                <span>Contact Us Today</span>
+                <span aria-hidden className="ml-1">
+                  ↗
+                </span>
+              </Link>
             </div>
           </div>
-
-          <Link
-            to="/services"
-            className="focus-ring inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-8 py-4 text-white font-semibold text-base transition-all hover:bg-brand-dark"
-          >
-            Check Our Services
-          </Link>
         </div>
       </HeroCorporate>
 
